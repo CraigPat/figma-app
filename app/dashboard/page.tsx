@@ -6,14 +6,14 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/api/auth/signin");
+    redirect("/signin");
   }
 
   return (
     <main className="p-8">
       <h1 className="text-2xl font-bold">Dashboard</h1>
       <p className="mt-4">
-        Welcome back, <b>{session.user?.name}</b>
+        Welcome back, <b>{session.user?.name ?? session.user?.email}</b>
       </p>
     </main>
   );
