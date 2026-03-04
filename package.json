@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "node prisma/seed.mjs"
+  },
+  "prisma": {
+    "seed": "npm run seed"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
