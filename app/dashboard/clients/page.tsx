@@ -34,27 +34,18 @@ function FilterGroup({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-xs font-medium text-[#64748b] w-16 shrink-0">{label}</span>
-      <button
-        onClick={() => onChange("")}
-        className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-          active === "" ? "bg-[#3b82f6] text-white" : "bg-[#f1f5f9] text-[#64748b] hover:bg-[#e2e8f0]"
-        }`}
+    <div className="flex flex-col gap-1">
+      <label className="text-xs font-medium text-[#64748b]">{label}</label>
+      <select
+        value={active}
+        onChange={(e) => onChange(e.target.value)}
+        className="rounded-lg border border-[#e2e8f0] bg-white px-3 py-2 text-sm text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-[#3b82f6]"
       >
-        All
-      </button>
-      {options.map((opt) => (
-        <button
-          key={opt}
-          onClick={() => onChange(active === opt ? "" : opt)}
-          className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-            active === opt ? "bg-[#3b82f6] text-white" : "bg-[#f1f5f9] text-[#64748b] hover:bg-[#e2e8f0]"
-          }`}
-        >
-          {opt}
-        </button>
-      ))}
+        <option value="">All</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
     </div>
   );
 }
@@ -87,16 +78,18 @@ export default function ClientsPage() {
 
       <div className="rounded-xl bg-white shadow-sm overflow-hidden">
         {/* Filters */}
-        <div className="border-b border-[#f1f5f9] px-6 py-4 space-y-3">
+        <div className="border-b border-[#f1f5f9] px-6 py-4 space-y-4">
           <input
             placeholder="Search clients…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="rounded-lg border border-[#e2e8f0] px-3 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-[#3b82f6]"
           />
-          <FilterGroup label="Stage"    options={STAGES}    active={stage}    onChange={setStage}    />
-          <FilterGroup label="Status"   options={STATUSES}  active={status}   onChange={setStatus}   />
-          <FilterGroup label="Employer" options={EMPLOYERS} active={employer} onChange={setEmployer} />
+          <div className="flex gap-4">
+            <FilterGroup label="Stage"    options={STAGES}    active={stage}    onChange={setStage}    />
+            <FilterGroup label="Status"   options={STATUSES}  active={status}   onChange={setStatus}   />
+            <FilterGroup label="Employer" options={EMPLOYERS} active={employer} onChange={setEmployer} />
+          </div>
         </div>
 
         {/* Table */}
